@@ -1,0 +1,26 @@
+{
+  "name": "proyectoweb",
+  "version": "1.0.0",
+  "description": "Proyecto para aplicaciones web 1",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisM711/proyectoWeb1.git"
+  },
+  "keywords": [
+    "proyecto",
+    "web"
+  ],
+  "author": "Yo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuisM711/proyectoWeb1/issues"
+  },
+  "homepage": "https://github.com/LuisM711/proyectoWeb1#readme",
+  "dependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
