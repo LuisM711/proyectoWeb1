@@ -1,0 +1,33 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/css/bootstrap.css")
+    script(src="/js/bootstrap.js") 
+    title Equipo 7
+  body
+    p#top(style="background-color: var(--bs-blue); font-weight: bold; padding: 5px;text-align: center") UNIVERSIDAD AUTONOMA DE SINALOA
+      svg(xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gem" viewBox="0 0 16 16")
+
+    .container.mt-5
+      .row.justify-content-center
+        .col-md-6
+          .card
+            .card-header
+              h5.text-center Venta de frutas del diablo
+            .card-body
+              if error
+                .alert.alert-danger
+                  p= error
+              form(action="/auth", method="POST")
+                .mb-3
+                  label(for="email", class="form-label") Correo electronico
+                  input(type="text", class="form-control", id="email", name="email", placeholder="Ingrese su correo electronico", required)
+                .mb-3
+                  label(for="Contra", class="form-label") Contraseña
+                  input(type="password", class="form-control", id="Contra", name="password", placeholder="Ingrese su contraseña", required)
+                  a(href="/documentosimportantes") Si usted ingresa al sistema acepta estos terminos y condiciones
+                button(type="submit", class="btn btn-primary btn-block") Iniciar sesión
+        .col-12.text-center.fixed-bottom.bg-dark.text-light.p-3
+          p Copyright 2023 Todos los derechos reservados al equipo 7
