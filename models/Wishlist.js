@@ -3,28 +3,27 @@ const sequelize = require('../database.js');
 const { type } = require('express/lib/response');
 const { FOREIGNKEYS } = require('sequelize/lib/query-types');
 const usuario = require('./Usuario.js');
-
-class Compra extends Model { }
-Compra.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
+const producto = require('./Producto.js')
+class Wishlist extends Model { }
+Wishlist.init({
     cliente: {
         type: DataTypes.INTEGER,
+        primaryKey: false,
         allowNull: false,
         references: {
             model: usuario,
             key: 'id'
         }
     },
-    compra: {
-        type: DataTypes.STRING
-    },
-    fecha:{
-        type: DataTypes.DATE
+    producto: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: producto,
+            key: 'id'
+        }
     }
 });
-Compra.belongsTo(usuario, {foreignKey: 'cliente'});
+Wishlist.belongsTo(usuario, {foreignKey: 'cliente'}),
+Wishlist.belongsToMany(producto, {foreignKey: 'producto' });
 module.exports = Compra;

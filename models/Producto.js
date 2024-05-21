@@ -24,4 +24,5 @@ Producto.init({
         type: DataTypes.INTEGER,
         allowNull: false
     }
-})
+});
+module.exports = Producto;
