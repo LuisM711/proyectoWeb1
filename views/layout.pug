@@ -4,7 +4,9 @@ html(lang="es")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel="stylesheet", href="/css/bootstrap.css")
+    link(rel="stylesheet", href="/css/principal.css")
     script(src="/js/bootstrap.js")
+    script(src="https://kit.fontawesome.com/7c4f6093dd.js", crossorigin='anonymous')
     title Equipo 7
   body
     .modal.fade#confirmLogoutModal(tabindex="-1")
@@ -27,6 +29,11 @@ html(lang="es")
           ul.navbar-nav
             li.nav-item
               a.nav-link(href="/usuarios") Control de Usuarios
+            li.nav-item
+            a(href="/wishlist")
+              i.fa-solid.fa-heart
+            li.nav-item
+              a.nav-link(href="/historial_de_compras") Mis Compras
             //- li.nav-item
             //-   a.nav-link(href="/nomina") Consultar nómina
             //- li.nav-item
@@ -42,6 +49,8 @@ html(lang="es")
             //- li.nav-item
               button.nav-link(onclick="generarNomina()") Generar nómina 
             li.nav-item
+              a.nav-link(href="/carrito") Carrito
+            li.nav-item
               a.nav-link(href="#" onclick="abrirModalCerrarSesion()") Cerrar sesión
     script.
       function abrirModalCerrarSesion() {
@@ -53,5 +62,4 @@ html(lang="es")
         alert("No tienes permisos para acceder a esta sección");
       }
   
-
   block content
