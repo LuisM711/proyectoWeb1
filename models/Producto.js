@@ -23,6 +23,15 @@ Producto.init({
     stock: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    url_Image: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
-});
+}, {
+    sequelize, // Pass the `sequelize` instance
+    modelName: 'Producto', // Choose the model name
+    tableName: 'productos', // Optional: specify the table name
+    timestamps: false // Optional: disable timestamps if you don't want createdAt and updatedAt fields
+  });
 module.exports = Producto;

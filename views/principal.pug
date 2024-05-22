@@ -23,8 +23,13 @@ block content
         <br>
         <br>
         <br>
+        a(name="productos")
+          
+
       <div class="card" style="width: 18rem;">
+         <a href="/product/{{product.id}}" class="stretched-link">
           <img src="/img/Mera_Mera_no_Mi.webp" class="card-img-top" alt="...">
+          hr
           <div class="card-body">
             <h5 class="card-title">Mera Mera no Mi</h5>
             <p class="card-text">La Mera Mera no Mi</p>
@@ -33,12 +38,28 @@ block content
             <i class="fa-regular fa-heart"></i>
             <a href="#" class="card-link">Añadir a Carrito</a>
           </div>
+          </a>
       </div>
+      <div class="card" style="width: 18rem; position: relative;">
+        <img src="{{product.imageUrl}}" class="card-img-top" alt="...">
+        <hr>
+        <div class="card-body">
+          <h5 class="card-title">{{product.name}}</h5>
+          <p class="card-text">{{product.description}}</p>
+        </div>
+        <div class="card-body">
+          <i class="fa-regular fa-heart"></i>
+          <a href="#" class="card-link">Añadir a Carrito</a>
+        </div>
+        <a href="/product/{{product.id}}" class="stretched-link"></a>
+      </div>
+
       <div class="card" style="width: 18rem;">
           <img src="/img/Fruta_Baku_Baku.webp" class="card-img-top" alt="...">
+          hr
           <div class="card-body">
             <h5 class="card-title">Baku Baku no Mi</h5>
-            <p class="card-text">La Baku Baku no Mi</p>
+            <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus sed aliquid consequatur placeat totam rerum accusantium, dolorum consequuntur cupiditate cumque!</p>
           </div>
           <div class="card-body">
             <i class="fa-regular fa-heart"></i>
@@ -47,6 +68,7 @@ block content
       </div>
       <div class="card" style="width: 18rem;">
           <img src="/img/Fruta_Bara_Bara.webp" class="card-img-top" alt="...">
+          hr
           <div class="card-body">
             <h5 class="card-title">Bara Bara no Mi</h5>
             <p class="card-text">La Bara Bara no Mi</p>
@@ -58,6 +80,7 @@ block content
       </div>
       <div class="card" style="width: 18rem;">
           <img src="/img/Fruta_Gomu_Gomu.webp" class="card-img-top" alt="...">
+          hr
           <div class="card-body">
             <h5 class="card-title">Mera Mera no Mi</h5>
             <p class="card-text">La Mera Mera no Mi</p>
