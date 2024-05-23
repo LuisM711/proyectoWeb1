@@ -24,7 +24,6 @@ module.exports.logout = (req, res) => {
 module.exports.authenticate = async (req, res) => {
     try {
         const { email, password } = req.body;
-        console.log(req.body);//findOne({ where: { title: 'My Title' } });
         const usuario = await UsuarioModel.findOne({ where: { correo: email } });
         if (!usuario) {
             return res.render('login', { error: 'Correo no encontrado' });

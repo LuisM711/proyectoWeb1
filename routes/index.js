@@ -5,6 +5,7 @@ const mainController = require('../controllers/mainController');
 const wishlistController = require('../controllers/wishlistController');
 const historialController = require('../controllers/historialController');
 const carritoController = require('../controllers/carritoController');
+const productosController = require('../controllers/productosController');
 // const usuariosController = require('../controllers/usuariosController');
 // const documentosimportantesController = require('../controllers/documentosController');
 // const nominaController = require('../controllers/nominaController');
@@ -15,11 +16,13 @@ const carritoController = require('../controllers/carritoController');
 // const verification = require("../middlewares/verification");
 
 module.exports = () => {
-    router.get('/', mainController.index);
-    router.get('/login', loginController.login);
-    router.get('/wishlist',wishlistController.wishlist);
+    // router.get('/', mainController.index);
+    router.get('/', loginController.login);
+    // router.get('/login', loginController.login);
+    router.get('/wishlist', wishlistController.wishlist);
     router.get('/historial_de_compras', historialController.historial);
     router.get('/carrito', carritoController.carrito);
+    router.get('/productos', productosController.productos);
     //   router.get('/documentosimportantes', documentosimportantesController.documentosimportantes);
     //   router.get('/usuarios', verification.revisarCookie, usuariosController.usuarios);
     //   router.get('/solicitudes', verification.revisarCookie, solicitudesController.solicitudes);

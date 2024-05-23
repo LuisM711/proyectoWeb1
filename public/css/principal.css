@@ -1,4 +1,4 @@
-.card-body{
+/* .card-body{
     padding-left: 10%;
     margin-top: 5%;
     
@@ -24,6 +24,19 @@
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1; /* Ensure the link is above all card contents */
-    pointer-events: auto; /* Ensure the link can be clicked */
-  }
+    z-index: 1;
+    pointer-events: auto;
+  } */
+#contenedorImagen {
+    /* width: 500px;
+    height: 500px; */
+    overflow: hidden;
+    align-self: center;
+}
+
+#imagen {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+}

@@ -2,8 +2,8 @@ doctype html
 html(lang="es")
   head
     meta(charset="UTF-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    link(rel="stylesheet", href="/css/bootstrap.css")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="/css/bootstrap.css")
     script(src="/js/bootstrap.js") 
     title Equipo 7
   body
@@ -20,14 +20,21 @@ html(lang="es")
               if error
                 .alert.alert-danger
                   p= error
-              form(action="/auth", method="POST")
+              form(action="/auth" method="POST")
                 .mb-3
-                  label(for="email", class="form-label") Correo electronico
-                  input(type="text", class="form-control", id="email", name="email", placeholder="Ingrese su correo electronico", required)
+                  label(for="email" class="form-label") Correo electronico
+                  input(type="text" class="form-control" id="email" name="email" placeholder="Ingrese su correo electronico", required)
                 .mb-3
-                  label(for="Contra", class="form-label") Contraseña
-                  input(type="password", class="form-control", id="Contra", name="password", placeholder="Ingrese su contraseña", required)
+                  label(for="Contra" class="form-label") Contraseña
+                  input(type="password" class="form-control" id="Contra" name="password" placeholder="Ingrese su contraseña", required)
                   a(href="/documentosimportantes") Si usted ingresa al sistema acepta estos terminos y condiciones
-                button(type="submit", class="btn btn-primary btn-block") Iniciar sesión
+                button(type="submit" class="btn btn-primary btn-block") Iniciar sesión
+                button(type="button" class="btn btn-primary btn-block" onclick = "bypass();") for dev purposes
         .col-12.text-center.fixed-bottom.bg-dark.text-light.p-3
           p Copyright 2023 Todos los derechos reservados al equipo 7
+    script.
+      function bypass() {
+        document.getElementById('email').value = 'luismario.lr46@gmail.com';
+        document.getElementById('Contra').value = 'LuisMario46';
+        document.querySelector('form').submit();
+      }
