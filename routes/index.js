@@ -16,9 +16,9 @@ const productosController = require('../controllers/productosController');
 // const verification = require("../middlewares/verification");
 
 module.exports = () => {
-    // router.get('/', mainController.index);
-    router.get('/', loginController.login);
-    // router.get('/login', loginController.login);
+    router.get('/', mainController.index);
+    // router.get('/', loginController.login);
+    router.get('/login', loginController.login);
     router.get('/wishlist', wishlistController.wishlist);
     router.get('/historial_de_compras', historialController.historial);
     router.get('/carrito', carritoController.carrito);

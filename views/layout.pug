@@ -10,19 +10,26 @@ html(lang="es")
     script(src="https://kit.fontawesome.com/7c4f6093dd.js" crossorigin='anonymous')
     title Equipo 7
   body
-    <header>
-      <nav class="menu">
+    header#header
+      nav.menu
         //- <label for="" class="breand">
-        <a href="/">
-          <img style="" src="/img/logo.png">
-        </a>
+        a(href="/")
+          img(src="/img/logo.png")
         //- </label>
-        <ul id="menuItems">
-          <li><a href="/productos">Nuestros productos</a></li>
-          <li><a href="/historial_de_compras">Mis compras</a></li>
-          <li><a href="/wishlist"><i class="fa-solid fa-heart fa-beat"></i></a></li>
-          <li><a href="/carrito"><i class="fa-solid fa-cart-shopping"></i></a></li>
-    </header>
+        ul#menuItems
+          li
+            a(href="#productos") Nuestros productos
+          li
+            a(href="/historial_de_compras") Mis compras
+          li
+            a(href="/wishlist")
+              i.fa-solid.fa-heart.fa-beat
+          li
+            a(href="/carrito")
+              i.fa-solid.fa-cart-shopping
+          li
+            a(href="/login")
+              i.fa-solid.fa-right-to-bracket
     script.
       function abrirModalCerrarSesion() {
         let confirmLogoutModal = new bootstrap.Modal(document.getElementById('confirmLogoutModal'));
@@ -32,5 +39,8 @@ html(lang="es")
       function sinPermisos() {
         alert("No tienes permisos para acceder a esta sección");
       }
-
+      function login(){
+        //se que hacer un include login.pug
+        include login.pug
+      }
   block content

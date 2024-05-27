@@ -20,13 +20,27 @@ block content
         button.carousel-control-next(type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next")
           span.carousel-control-next-icon(aria-hidden="true")
           span.visually-hidden Next
-        //- <br>
-        //- <br>
-        //- <br>
-        //- a(name="productos")
-          
 
-      
+
+      h1.text-center Nuestros productos
+      #productos
+          each product in data
+            .col-lg-4.col-md-6.col-sm-12.mb-4
+              .card.h-100(style="margin: 10px;")
+                .image-container.d-flex.align-items-center.justify-content-center#contenedorImagen
+                  img.card-img-top.img-fluid#imagen(src=product.url_Image alt=product.nombre)
+                .card-body
+                  h5.card-title.fw-bold= product.nombre + " no mi"
+                  h6.card-title.fw-bold Tipo: #{product.tipoProducto.valor}
+                  p.card-text= product.descripcion
+                  p.card-text.fw-bold  Precio: #{product.precio}
+                  p.card-text.fw-bold Stock: #{product.stock}
+                  
+                  a.fa-regular.fa-heart
+                  a.card-link(href="/agregarCarrito/" + product.id) Añadir a Carrito
+
+
+
     script.
       //- const datos = !{JSON.stringify(datos)};
       //- console.log(datos);

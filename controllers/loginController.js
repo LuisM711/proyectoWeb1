@@ -2,8 +2,10 @@
 //const jsonwebtoken = require('jsonwebtoken');
 //const EmpleadoModel = require('../models/EmpleadoModel');
 //const verification = require("../middlewares/verification");
+const { render } = require('pug');
+const ProductoModel = require('../models/Producto');
 const UsuarioModel = require('../models/Usuario');
-module.exports.login = (req, res) => {
+module.exports.login = async (req, res) => {
     // const datos = verification.getUserData(req, res);
     // //console.log(datos);
     // if (datos) {
