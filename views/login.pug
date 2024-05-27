@@ -1,9 +1,43 @@
-form(action="/auth" method="POST")
-  .mb-3
-    label(for="email" class="form-label") Correo electronico
-    input(type="text" class="form-control" id="email" name="email" placeholder="Ingrese su correo electronico", required)
-  .mb-3
-    label(for="Contra" class="form-label") Contraseña
-    input(type="password" class="form-control" id="Contra" name="password" placeholder="Ingrese su contraseña", required)
-    a(href="/documentosimportantes") Si usted ingresa al sistema acepta estos terminos y condiciones
-  button(type="submit" class="btn btn-primary btn-block") Iniciar sesión
+extends layout
+
+block content
+  section.vh-80
+        .container-fluid.h-custom
+          .row.d-flex.justify-content-center.align-items-center.h-100
+            .col-md-9.col-lg-6.col-xl-5
+              img.img-fluid(src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" alt="Sample image")
+            .col-md-8.col-lg-6.col-xl-4.offset-xl-1
+              form
+                .divider.d-flex.align-items-center.my-4
+                  h2.text-center.fw-bold.mx-3.mb-0 Iniciar sesión
+                //- Email input
+                .form-outline.mb-4(data-mdb-input-init)
+                  input#form3Example3.form-control.form-control-lg(type="email" placeholder="Ingresa tu correo electronico")
+                  label.form-label(for="form3Example3") Correo electronico
+                //- contraseña input
+                .form-outline.mb-3(data-mdb-input-init)
+                  input#form3Example4.form-control.form-control-lg(type="password" placeholder="Ingresa contraseña")
+                  label.form-label(for="form3Example4") Contraseña
+                .d-flex.justify-content-between.align-items-center
+                  //- Checkbox
+                  .form-check.mb-0
+                    input#form2Example3.form-check-input.me-2(type="checkbox" value="")
+                    label.form-check-label(for="form2Example3") Recuerdame
+                  a.text-body(href="/forgotPassword") Contraseña olvidada?
+                .text-center.text-lg-start.mt-4.pt-2
+                  button.btn.btn-primary.btn-lg(type="button" data-mdb-button-init data-mdb-ripple-init style="padding-left: 2.5rem; padding-right: 2.5rem;") Ingresar
+                  p.small.fw-bold.mt-2.pt-1.mb-0 No tienes cuenta?
+                    a.link-danger(href="#!") Registrate
+        .d-flex.flex-column.flex-md-row.text-center.text-md-start.justify-content-between.py-4.px-4.px-xl-5.bg-primary
+          //- Copyright
+          .text-white.mb-3.mb-md-0 Copyright © 2022. Todos los derechos reservados.
+          //- Right
+          div
+            a.text-white.me-4(href="https://www.facebook.com/UASfim")
+              i.fab.fa-facebook-f
+            a.text-white.me-4(href="https://l.facebook.com/l.php?u=https%3A%2F%2Ftwitter.com%2Fuasfim%3Ffbclid%3DIwZXh0bgNhZW0CMTAAAR2rjuV_eov2sHE3CdyQfHkcV_chPcejAFX0jbFAmTtuKN-Znz-qp3DX7yU_aem_AVTotvqO5t0H7UDVlqSTFx7qm35P4UqtWTRi6UoGG6Hgvi4g1qkGo5cAoxRW2huxpaxsYeoxUJfNfct9dduwE3wj&h=AT3qI1aUj9aN5uJ1DwcGZJAEdB-4tZRv_rbWRwBkEKBcZM41gviS2qXpmVd79QmjNcZqxDdT5emW_dtCx38pxievC4dRYL28pGu3bKshA1ii9jvzHMSKgPH_YfKI35VFFXTHSUOMBRNwhLlU1rky")
+              i.fab.fa-twitter
+            a.text-white.me-4(href="https://fim.uas.edu.mx/")
+              i.fab.fa-google
+            //- a.text-white(href="#!")
+            //-   i.fab.fa-linkedin-in

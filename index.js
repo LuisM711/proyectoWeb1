@@ -6,8 +6,9 @@ const dotenv = require('dotenv');
 const app = express();
 const bodyParser = require('body-parser');
 const sequelize = require('./database.js');
+const morgan = require('morgan');
 app.use(cookieParser());
-
+app.use(morgan('dev'));
 app.use(express.json());
 
 dotenv.config();

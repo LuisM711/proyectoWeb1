@@ -16,7 +16,7 @@ module.exports.index = async (req, res) => {
         });
 
         // console.log("productos");
-        console.log(JSON.stringify(productos));
+        // console.log(JSON.stringify(productos));
         res.render('principal', {
             data: productos,
         });
