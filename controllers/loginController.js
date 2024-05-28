@@ -19,24 +19,69 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.logout = (req, res) => {
-    // const cookieName = 'jwt';
-    // res.clearCookie(cookieName);
-    res.render('login', { error: 'Sesión cerrada' });
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Error al cerrar sesión');
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    });
 }
-module.exports.authenticate = async (req, res) => {
+module.exports.doLogin = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const usuario = await UsuarioModel.findOne({ where: { correo: email } });
+        console.log(JSON.stringify(req.body));
+        const { tbEmail, tbPassword, cbRecordar } = req.body;
+        console.log(tbEmail, tbPassword);
+        const usuario = await UsuarioModel.findOne({ where: { correo: tbEmail } });
+        console.log(usuario);
         if (!usuario) {
+            console.log("no se encontro el usuario");
             return res.render('login', { error: 'Correo no encontrado' });
         }
-        if (password === usuario.password) {
-            return res.render('principal');
+        console.log(tbPassword, usuario.correo);
+        if (tbPassword === usuario.password) {
+            console.log("contraseña correcta");
+            req.session.regenerate((err) => {
+                if (err) {
+                    return res.render('login', { error: 'Error al autenticar' });
+                }
+
+                req.session.informacion = {
+                    nombre: usuario.nombre,
+                    email: tbEmail,
+                    preferencias: {
+                        darkMode: false
+                    }
+                };
+
+                if (cbRecordar === "on") {
+                    req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+                } else {
+                    req.session.cookie.expires = false;
+                }
+
+                return res.redirect('/');
+            });
         } else {
             return res.render('login', { error: 'Contraseña incorrecta' });
         }
     } catch (error) {
-        //console.log(error);
+        console.log(error);
         return res.render('login', { error: 'Error al autenticar' });
     }
 };
+
+module.exports.perfil = async (req, res) => {
+    try {
+        if (req.session.informacion) {
+            res.render('perfil');
+        }
+        else {
+            throw new Error('Debes iniciar sesión');
+            //res.render('login', { error: 'Debes iniciar sesión' });
+        }
+    } catch (error) {
+        return res.render('login', { error: error });
+    }
+
+}

@@ -4,9 +4,12 @@ block content
     .row.justify-content-center
       .col-md-6.text-center
         h1 Bienvenido a la tienda de frutas del diablo
-      //- if datos.error
-      //-   .alert.alert-danger
-      //-     p= datos.error
+      if error
+        .alert.alert-danger.alert-dismissible.fade.show(role="alert")
+          p #{error}
+      if success
+        .alert.alert-success.alert-dismissible.fade.show(role="alert")
+          p #{success}
       div#carouselExampleInterval.carousel.slide.mt-3(data-bs-ride="carousel")
         .carousel-inner
           each img, index in ['/img/foto1.jpg', '/img/foto2.jpg']
@@ -36,8 +39,12 @@ block content
                   p.card-text.fw-bold  Precio: #{product.precio}
                   p.card-text.fw-bold Stock: #{product.stock}
                   
-                  a.fa-regular.fa-heart
-                  a.card-link(href="/agregarCarrito/" + product.id) Añadir a Carrito
+                  i.fa-solid.fa-heart
+                  a.card-link(href=`/wishlist/${product.id}`) Añadir a favoritos
+                  br
+                  br
+                  i.fa-solid.fa-cart-shopping
+                  a.card-link(href=`/agregarCarrito/${product.id}`) Añadir a Carrito
 
 
 

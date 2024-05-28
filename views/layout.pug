@@ -7,9 +7,12 @@ html(lang="es")
     link(rel="stylesheet" href="/css/principal.css")
     link(rel="stylesheet" href="/css/layout.css")
     link(rel="stylesheet" href="/css/login.css")
-    script(defer src="/css/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js")
+    
+
+    //public\css\bootstrap-5.3.3-dist\bootstrap-5.3.3-dist\js\bootstrap.bundle.min.js
     //- script(src="https://kit.fontawesome.com/7c4f6093dd.js" crossorigin='anonymous')
-    script(src="fontawesome/js/all.min.js") 
+    script(defer src="/css/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js")
+    script(defer src="fontawesome/js/all.min.js") 
     title Equipo 7
   body
     header#header
@@ -31,8 +34,11 @@ html(lang="es")
               a.nav-link(href="/carrito")
                 i.fa-solid.fa-cart-shopping
             li.nav-item
-              a.nav-link(href="/login")
-                i.fa-solid.fa-right-to-bracket
+              if informacion
+                a.nav-link(href="/perfil")= informacion.nombre
+              else
+                a.nav-link(href="/login")
+                  i.fa-solid.fa-right-to-bracket
     script.
       function abrirModalCerrarSesion() {
         let confirmLogoutModal = new bootstrap.Modal(document.getElementById('confirmLogoutModal'));
@@ -45,6 +51,5 @@ html(lang="es")
 
       function login(){
         //se que hacer un include login.pug
-        include login.pug
       }
   block content
