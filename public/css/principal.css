@@ -40,7 +40,7 @@
     display: block;
     margin: auto;
 }
-#productos {
+.contenido {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
