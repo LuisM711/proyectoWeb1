@@ -19,14 +19,18 @@ app.use(session({
   cookie: { secure: false } // Asegúrate de usar https
 }));
 dotenv.config();
-
+app.disable('x-powered-by');
 sequelize.sync({ force: false }).then(() => {
   console.log('Base de datos conectada');
 }).catch(error => {
   console.log('Error al conectar a la base de datos: ' + error.message);
 });
+
 app.use((req, res, next) => {
+  //acceder a la cookie "darkmode"
+  res.locals.darkmode = req.cookies.darkmode;
   res.locals.informacion = req.session.informacion;
+  res.locals.carritoCount = req.session.informacion ? req.session.informacion.carrito : 0;
   next();
 });
 

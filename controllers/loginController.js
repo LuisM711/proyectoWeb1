@@ -5,6 +5,7 @@
 const { render } = require('pug');
 const ProductoModel = require('../models/Producto');
 const UsuarioModel = require('../models/Usuario');
+const ProductosController = require('./productosController');
 module.exports.login = async (req, res) => {
     // const datos = verification.getUserData(req, res);
     // //console.log(datos);
@@ -41,23 +42,30 @@ module.exports.doLogin = async (req, res) => {
         console.log(tbPassword, usuario.correo);
         if (tbPassword === usuario.password) {
             console.log("contraseña correcta");
-            req.session.regenerate((err) => {
+            req.session.regenerate(async (err) => {
                 if (err) {
                     return res.render('login', { error: 'Error al autenticar' });
                 }
 
                 req.session.informacion = {
+                    id: usuario.id,
                     nombre: usuario.nombre,
                     email: tbEmail
                 };
 
-                if (cbRecordar === "on") {
-                    req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
-                } else {
-                    req.session.cookie.expires = false;
-                }
+                try {
+                    await ProductosController.getCantidadCarrito(req, res);
+                    if (cbRecordar === "on") {
+                        req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+                    } else {
+                        req.session.cookie.expires = false;
+                    }
 
-                return res.redirect('/');
+                    return res.redirect('/');
+                } catch (error) {
+                    console.log(error);
+                    return res.render('login', { error: 'Error al autenticar' });
+                }
             });
         } else {
             return res.render('login', { error: 'Contraseña incorrecta' });

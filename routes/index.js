@@ -17,6 +17,9 @@ module.exports = () => {
     router.get('/logout', loginController.logout);
     router.get('/perfil', loginController.perfil);
     router.get('/wishlist/:id', productosController.wishlistPush);
+    router.get('/agregar/:id', productosController.agregarCarrito);
+    router.get('/cantidadItems', productosController.getCantidadCarrito);	
+
 
     router.post('/login', loginController.doLogin);
 

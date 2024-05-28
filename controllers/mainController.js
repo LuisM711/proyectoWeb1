@@ -29,7 +29,7 @@ module.exports.getProductos = async (req, res) => {
         });
 
         // console.log("productos");
-        console.log(productos);
+        //console.log(productos);
         return productos;
     } catch (error) {
         console.error('Error al obtener productos:', error);

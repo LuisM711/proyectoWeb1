@@ -27,26 +27,26 @@ block content
       div#productos
       h1.text-center Nuestros productos
       div.contenido
-          each product in data
-            .col-lg-4.col-md-6.col-sm-12.mb-4
-              .card.h-100(style="margin: 10px;")
-                .image-container.d-flex.align-items-center.justify-content-center#contenedorImagen
-                  img.card-img-top.img-fluid#imagen(src=product.url_Image alt=product.nombre)
-                .card-body
-                  h5.card-title.fw-bold= product.nombre + " no mi"
-                  h6.card-title.fw-bold Tipo: #{product.tipoProducto.valor}
-                  p.card-text= product.descripcion
-                  p.card-text.fw-bold  Precio: #{product.precio}
-                  p.card-text.fw-bold Stock: #{product.stock}
-                  
-                  a.add-to-favorites-btn(href=`/wishlist/${product.id}`)
-                    i.fa-solid.fa-heart
-                    | Añadir a favoritos
+        each product in data
+          .col-lg-4.col-md-6.col-sm-12.mb-4
+            .card.h-100(style="margin: 10px;")
+              .image-container.d-flex.align-items-center.justify-content-center#contenedorImagen
+                img.card-img-top.img-fluid#imagen(src=product.url_Image alt=product.nombre)
+              .card-body
+                h5.card-title.fw-bold= product.nombre + " no mi"
+                h6.card-title.fw-bold Tipo: #{product.tipoProducto.valor}
+                p.card-text= product.descripcion
+                p.card-text.fw-bold  Precio: #{product.precio}
+                p.card-text.fw-bold Stock: #{product.stock}
+
+                a.add-to-favorites-btn(href=`/wishlist/${product.id}`)
+                  i.fa-solid.fa-heart
+                  | Añadir a favoritos
 
 
-                  button.add-to-cart-btn(onclick=`agregar(${product.id})`)
-                    i.fa-solid.fa-cart-shopping
-                    | Añadir al carrito
+                a.add-to-cart-btn(href=`/agregar/${product.id}`)
+                  i.fa-solid.fa-cart-shopping
+                  | Añadir al carrito
 
 
 

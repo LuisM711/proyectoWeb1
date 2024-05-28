@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+doctype html
 html(lang="es")
   head
     meta(charset="UTF-8")
@@ -10,6 +10,18 @@ html(lang="es")
     script(defer src="/css/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js")
     script(defer src="/fontawesome/js/all.min.js")
     title Akuma no mi's store
+    style.
+      .badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        padding: 0.2em 0.6em;
+        font-size: 0.75em;
+      }
   body
     header#header
       nav.navbar.navbar-expand-lg
@@ -23,33 +35,96 @@ html(lang="es")
               a.nav-link(href="/#productos") Nuestros productos
             li.nav-item
               a.nav-link(href="/historial_de_compras") Mis compras
-            li.nav-item
+            li.nav-item.position-relative
               a.nav-link(href="/wishlist")
                 i.fa-solid.fa-heart.fa-beat
-            li.nav-item
+                span.badge#wishlist-count 0
+            li.nav-item.position-relative
               a.nav-link(href="/carrito")
                 i.fa-solid.fa-cart-shopping
+                if carritoCount
+                  span.badge#cart-count= carritoCount
+                else
+                  span.badge#cart-count 0
             li.nav-item
               if informacion
-                a.nav-link(href="/perfil") Hola  #{informacion.nombre.split(' ')[0]}
+                a.nav-link(href="/perfil") Hola #{informacion.nombre.split(' ')[0]}
               else
                 a.nav-link(href="/login")
                   i.fa-solid.fa-right-to-bracket
             li.nav-item
-                include componentes/toggle-darkmode
+              include componentes/toggle-darkmode
     script.
-        onload = (event) => {
-            const darkmode = document.cookie.split('; ').find(row => row.startsWith('darkmode='));
-            if (darkmode) {
-                document.getElementById('toggle').checked = darkmode.split('=')[1] === 'true';
-                if (document.getElementById('toggle').checked) {
-                    document.body.classList.add('dark');
-                }
-            }
+      onload = (event) => {
+        //- const darkmode = document.cookie.split('; ').find(row => row.startsWith('darkmode='));
+        //- if (darkmode) {
+        //-   document.getElementById('toggle').checked = darkmode.split('=')[1] === 'true';
+        //-   if (document.getElementById('toggle').checked) {
+        //-     document.body.classList.add('dark');
+        //-   }
+        //- }
+        if(toggle.checked) {
+          document.body.classList.add('dark');
+        }
+        else {
+          document.body.classList.remove('dark');
+        }
+        const carritoCount = !{ JSON.stringify(informacion || {}) };
+        console.log(carritoCount);
+        updateCounts();
+      }
+
+      document.getElementById('toggle').addEventListener('change', function(event) {
+        const darkModeValue = event.target.checked ? 'true' : 'false';
+        document.body.classList.toggle('dark', event.target.checked);
+        document.cookie = `darkmode=${darkModeValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure;`;
+      });
+
+      function updateCounts() {
+          const wishlistCount = fetchWishlistCount();
+          document.getElementById('wishlist-count').textContent = wishlistCount;
+
+          //- fetchCartCount().then(cartCount => {
+          //-     document.getElementById('cart-count').textContent = cartCount;
+          //- }).catch(error => {
+          //-     console.error('Fetch error:', error);
+          //-     document.getElementById('cart-count').textContent = 0;
+          //- });
+      }
+
+      // Example fetch/count functions
+      function fetchWishlistCount() {
+        let cantidadWish = 0;
+        try {
+          const datos = !{ JSON.stringify(informacion || {}) };
+          cantidadWish = datos.wishlist.length;
+        }
+        catch (error) {
+
         }
 
-        document.getElementById('toggle').addEventListener('change', function(event) {
-            const darkModeValue = event.target.checked ? 'true' : 'false';
-            document.body.classList.toggle('dark', event.target.checked);
-            document.cookie = `darkmode=${darkModeValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure;`;
-        });
+
+
+          return cantidadWish || 0;
+      }
+
+      function fetchCartCount() {
+        //- return fetch('/cantidadItems')
+        //-     .then(response => {
+        //-         if (!response.ok) {
+        //-             throw new Error('Network response was not ok');
+        //-         }
+        //-         return response.json();
+        //-     })
+        //-     .then(data => {
+        //-         //console.log(data);
+        //-         return data.cantidad; // Suponiendo que la respuesta tenga una propiedad 'cantidad'
+        //-     })
+        //-     .catch(error => {
+        //-         console.error('Fetch error:', error);
+        //-         return 0; // Valor por defecto en caso de error
+        //-     });
+      }
+
+
+    
