@@ -48,10 +48,7 @@ module.exports.doLogin = async (req, res) => {
 
                 req.session.informacion = {
                     nombre: usuario.nombre,
-                    email: tbEmail,
-                    preferencias: {
-                        darkMode: false
-                    }
+                    email: tbEmail
                 };
 
                 if (cbRecordar === "on") {

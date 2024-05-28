@@ -1,4 +1,4 @@
-extends layout
+include navbar
 block content
   .container.mt-3
     .row.justify-content-center
@@ -39,12 +39,14 @@ block content
                   p.card-text.fw-bold  Precio: #{product.precio}
                   p.card-text.fw-bold Stock: #{product.stock}
                   
-                  i.fa-solid.fa-heart
-                  a.card-link(href=`/wishlist/${product.id}`) Añadir a favoritos
-                  br
-                  br
-                  i.fa-solid.fa-cart-shopping
-                  a.card-link(href=`/agregarCarrito/${product.id}`) Añadir a Carrito
+                  a.add-to-favorites-btn(href=`/wishlist/${product.id}`)
+                    i.fa-solid.fa-heart
+                    | Añadir a favoritos
+
+
+                  button.add-to-cart-btn(onclick=`agregar(${product.id})`)
+                    i.fa-solid.fa-cart-shopping
+                    | Añadir al carrito
 
 
 

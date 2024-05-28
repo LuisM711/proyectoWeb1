@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="/css/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css")
+    link(rel="stylesheet" href="/css/principal.css")
+    link(rel="stylesheet" href="/css/layout.css")
+    link(rel="stylesheet" href="/css/login.css")
+    script(defer src="/css/bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js")
+    script(defer src="/fontawesome/js/all.min.js")
+    title Akuma no mi's store
+  body
+    header#header
+      nav.navbar.navbar-expand-lg
+        a.navbar-brand(href="/")
+          img(src="/img/logo.png" alt="Logo")
+        button.navbar-toggler(type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        .collapse.navbar-collapse#navbarNav
+          ul.navbar-nav.ms-auto
+            li.nav-item
+              a.nav-link(href="/#productos") Nuestros productos
+            li.nav-item
+              a.nav-link(href="/historial_de_compras") Mis compras
+            li.nav-item
+              a.nav-link(href="/wishlist")
+                i.fa-solid.fa-heart.fa-beat
+            li.nav-item
+              a.nav-link(href="/carrito")
+                i.fa-solid.fa-cart-shopping
+            li.nav-item
+              if informacion
+                a.nav-link(href="/perfil") Hola  #{informacion.nombre.split(' ')[0]}
+              else
+                a.nav-link(href="/login")
+                  i.fa-solid.fa-right-to-bracket
+            li.nav-item
+                include componentes/toggle-darkmode
+    script.
+        onload = (event) => {
+            const darkmode = document.cookie.split('; ').find(row => row.startsWith('darkmode='));
+            if (darkmode) {
+                document.getElementById('toggle').checked = darkmode.split('=')[1] === 'true';
+                if (document.getElementById('toggle').checked) {
+                    document.body.classList.add('dark');
+                }
+            }
+        }
+
+        document.getElementById('toggle').addEventListener('change', function(event) {
+            const darkModeValue = event.target.checked ? 'true' : 'false';
+            document.body.classList.toggle('dark', event.target.checked);
+            document.cookie = `darkmode=${darkModeValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure;`;
+        });
