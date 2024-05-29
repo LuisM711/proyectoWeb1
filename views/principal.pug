@@ -12,7 +12,7 @@ block content
           p #{success}
       div#carouselExampleInterval.carousel.slide.mt-3(data-bs-ride="carousel")
         .carousel-inner
-          each img, index in ['/img/foto1.jpg', '/img/foto2.jpg']
+          each img, index in ['/img/foto1.jpg', '/img/foto2.jpg', '/img/foto3.jpg', '/img/foto4.jpg']
             .carousel-item(class=index === 0 ? 'active' : '', data-bs-interval= '2500')
               img.d-block.w-100.h-100(object-fit="cover", src=img, alt=`Slide ${index + 1}`)
 

@@ -57,10 +57,13 @@ body {
 
 .dark {
   background-color: #000;
-  color: #C0D6DF;
-  .card { 
+  color: #C0D6DF !important;
+
+  .card {
     background-color: thistle;
 
   }
-
+  .card-header {
+    background-color: #bdc3c7  !important;
+  }
 }

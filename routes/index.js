@@ -6,6 +6,7 @@ const wishlistController = require('../controllers/wishlistController');
 const historialController = require('../controllers/historialController');
 const carritoController = require('../controllers/carritoController');
 const productosController = require('../controllers/productosController');
+const correoController = require('../controllers/correoController');
 
 module.exports = () => {
     router.get('/', mainController.index);
@@ -21,10 +22,16 @@ module.exports = () => {
     router.get('/cantidadItems', productosController.getCantidadCarrito);	
     router.get('/eliminarWish/:id', productosController.eliminarWish);
     router.get('/borrarCarrito/:id', productosController.eliminarCarrito);
+    router.get('/forgotPassword', loginController.forgotPassword);
+    router.get('/signin', loginController.signin);
+
 
     router.post('/login', loginController.doLogin);
     router.post('/agregar/:id', productosController.agregarAjax);
     router.post('/changePassword', loginController.changePassword);
+    router.post('/forgotPassword', correoController.forgotPassword);
+    router.post('/register', loginController.registrarUsuario);
+
 
     //   router.put('/guardarDetallesEmpleado/:idEmpleado',verification.revisarCookie, salariosController.actualizarDatos);
     //   router.put('/actualizarImpuesto', verification.revisarCookie, impuestosController.actualizarImpuesto);

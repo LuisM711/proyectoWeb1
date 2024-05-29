@@ -109,3 +109,54 @@ module.exports.changePassword = async (req, res) => {
 
 
 }
+module.exports.forgotPassword = (req, res) => {
+    res.render('forgotPassword');
+
+}
+module.exports.signin = (req, res) => {
+    res.render('signin');
+}
+module.exports.registrarUsuario = async(req, res) => {
+    const {tbNombre,tbApellido,tbEmail,tbPassword,cbRecordar} = req.body;
+    const usuario = await UsuarioModel.findOne({where:{correo:tbEmail}});
+    if(usuario){
+        return res.render('signin',{error:'Correo ya registrado'});
+    }
+    const newUser = await UsuarioModel.create({
+        nombre:tbNombre,
+        apellido:tbApellido,
+        correo:tbEmail,
+        password:tbPassword,
+        rol:'cliente'
+    });
+    if(newUser){
+        req.session.regenerate(async (err) => {
+            if (err) {
+                return res.render('signin', { error: 'Error al autenticar' });
+            }
+
+            req.session.informacion = {
+                id: newUser.id,
+                nombre: newUser.nombre,
+                email: tbEmail
+            };
+
+            try {
+                await ProductosController.getCantidadCarrito(req, res);
+                if (cbRecordar === "on") {
+                    req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+                } else {
+                    req.session.cookie.expires = false;
+                }
+
+                return res.redirect('/');
+            } catch (error) {
+                console.log(error);
+                return res.render('signin', { error: 'Error al autenticar' });
+            }
+        });
+    }
+    else{
+        return res.render('signin',{error:'Error al registrar usuario'});
+    }
+}
