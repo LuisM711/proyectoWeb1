@@ -1,3 +1,36 @@
 include navbar
 block content
-    h1 Esto sera el carrito de compras
+    h1.text-center Carrito de Compras
+    .contenido
+        if !carrito || carrito.length === 0
+            .alert.alert-info.text-center#alerta
+                h4 Tu carrito está vacío. ¡Explora nuestros productos y agrega tus favoritos!
+                a.btn.btn-primary.btn-lg(href="/#productos") Ir a comprar
+        else
+            .container
+                .row
+                    .col-lg-9.col-md-8.col-sm-12
+                        each product in carrito
+                            .card.mb-4(style="width: 100%;")
+                                .row.g-0
+                                    .col-md-4
+                                        img.card-img-left.img-fluid#imagen(src=product.url_Image alt=product.nombre style="width: 100%; height: auto;")
+                                    .col-md-8
+                                        .card-body
+                                            h5.card-title.fw-bold= product.nombre
+                                            p.card-text= product.descripcion
+                                            p.card-text.fw-bold Precio: #{product.precio}
+                                            p.card-text.fw-bold Stock: #{product.stock}
+                                            a.btn.btn-danger(href=`/borrarCarrito/${product.id}`) Borrar
+                    .col-lg-3.col-md-4.col-sm-12
+                        .card
+                            .card-body
+                                h5.card-title.fw-bold Resumen del Pedido
+                                p.card-text Precio total (sin IVA): #{carrito.reduce((sum, product) => sum + product.precio, 0)}
+                                p.card-text IVA (16%): #{carrito.reduce((sum, product) => sum + product.precio, 0) * 0.16}
+                                h4.card-text.fw-bold Precio total (con IVA): #{carrito.reduce((sum, product) => sum + product.precio, 0) * 1.16}
+                                input.btn.btn-success.btn-lg(type='button' value='Pagar' style="width: 100%; margin-top: 10px;")
+
+    script.
+        const carrito = !{ JSON.stringify(carrito || {}) };
+        console.log(carrito);

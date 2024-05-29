@@ -13,16 +13,13 @@ block content
               form(method="POST" action="/login" )
                 .divider.d-flex.align-items-center.my-4
                   h2.text-center.fw-bold.mx-3.mb-0 Iniciar sesión
-                //- Email input
                 .form-outline.mb-4(data-mdb-input-init)
-                  input#tbEmail.form-control.form-control-lg(type="email" placeholder="Ingresa tu correo electronico" name="tbEmail")
+                  input#tbEmail.form-control.form-control-lg(type="email" placeholder="Ingresa tu correo electronico" name="tbEmail" value="admin@admin.com")
                   label.form-label(for="tbEmail") Correo electronico
-                //- contraseña input
                 .form-outline.mb-3(data-mdb-input-init)
-                  input#tbPassword.form-control.form-control-lg(type="password" placeholder="Ingresa contraseña" name="tbPassword")
+                  input#tbPassword.form-control.form-control-lg(type="password" placeholder="Ingresa contraseña" name="tbPassword" value="admin")
                   label.form-label(for="tbPassword") Contraseña
                 .d-flex.justify-content-between.align-items-center
-                  //- Checkbox
                   .form-check.mb-0
                     input#cbRecordar.form-check-input.me-2(type="checkbox" name="cbRecordar")
                     label.form-check-label(for="cbRecordar") Recuerdame

@@ -70,26 +70,25 @@ html(lang="es")
           document.body.classList.remove('dark');
         }
         const carritoCount = !{ JSON.stringify(informacion || {}) };
-        console.log(carritoCount);
         updateCounts();
       }
 
       document.getElementById('toggle').addEventListener('change', function(event) {
         const darkModeValue = event.target.checked ? 'true' : 'false';
         document.body.classList.toggle('dark', event.target.checked);
-        document.cookie = `darkmode=${darkModeValue}; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure;`;
+        document.cookie = `darkmode=${darkModeValue};path="/",  expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure;`;
       });
 
       function updateCounts() {
-          const wishlistCount = fetchWishlistCount();
-          document.getElementById('wishlist-count').textContent = wishlistCount;
+        const wishlistCount = fetchWishlistCount();
+        document.getElementById('wishlist-count').textContent = wishlistCount;
 
-          //- fetchCartCount().then(cartCount => {
-          //-     document.getElementById('cart-count').textContent = cartCount;
-          //- }).catch(error => {
-          //-     console.error('Fetch error:', error);
-          //-     document.getElementById('cart-count').textContent = 0;
-          //- });
+        //- fetchCartCount().then(cartCount => {
+        //-     document.getElementById('cart-count').textContent = cartCount;
+        //- }).catch(error => {
+        //-     console.error('Fetch error:', error);
+        //-     document.getElementById('cart-count').textContent = 0;
+        //- });
       }
 
       // Example fetch/count functions
@@ -125,6 +124,39 @@ html(lang="es")
         //-         return 0; // Valor por defecto en caso de error
         //-     });
       }
+      avisoError = (mensaje = "") => {
+        let aviso = document.createElement("div");
+        aviso.role = "alert";
+        aviso.classList.add("alert");
+        aviso.classList.add("alert-danger");
 
+        aviso.innerHTML = mensaje;
+        let DOMaviso = document.getElementById("aviso");
+        DOMaviso.innerHTML = '';
+        DOMaviso.appendChild(aviso);
 
-    
+        setTimeout(function () {
+          aviso.style.opacity = '0';
+          setTimeout(function () {
+            DOMaviso.removeChild(aviso);
+          }, 1000);
+        }, 2000);
+        }
+      avisoExito = (mensaje = "") => {
+        let aviso = document.createElement("div");
+        aviso.role = "alert";
+        aviso.classList.add("alert");
+        aviso.classList.add("alert-success");
+
+        aviso.innerHTML = mensaje;
+        let DOMaviso = document.getElementById("aviso");
+        DOMaviso.innerHTML = '';
+        DOMaviso.appendChild(aviso);
+
+        setTimeout(function () {
+          aviso.style.opacity = '0';
+          setTimeout(function () {
+            DOMaviso.removeChild(aviso);
+          }, 1000);
+        }, 2000);
+        }

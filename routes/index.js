@@ -19,10 +19,12 @@ module.exports = () => {
     router.get('/wishlist/:id', productosController.wishlistPush);
     router.get('/agregar/:id', productosController.agregarCarrito);
     router.get('/cantidadItems', productosController.getCantidadCarrito);	
-
+    router.get('/eliminarWish/:id', productosController.eliminarWish);
+    router.get('/borrarCarrito/:id', productosController.eliminarCarrito);
 
     router.post('/login', loginController.doLogin);
-
+    router.post('/agregar/:id', productosController.agregarAjax);
+    router.post('/changePassword', loginController.changePassword);
 
     //   router.put('/guardarDetallesEmpleado/:idEmpleado',verification.revisarCookie, salariosController.actualizarDatos);
     //   router.put('/actualizarImpuesto', verification.revisarCookie, impuestosController.actualizarImpuesto);

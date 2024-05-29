@@ -1,0 +1,6 @@
+PORT = 5678
+SECRET = clavesupermegasecreta
+
+
+SMTP_USER=correo@gmail.com
+SMTP_PWD=password

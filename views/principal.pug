@@ -26,6 +26,7 @@ block content
 
       div#productos
       h1.text-center Nuestros productos
+      div#aviso
       div.contenido
         each product in data
           .col-lg-4.col-md-6.col-sm-12.mb-4
@@ -43,13 +44,77 @@ block content
                   i.fa-solid.fa-heart
                   | Añadir a favoritos
 
-
-                a.add-to-cart-btn(href=`/agregar/${product.id}`)
+                button.add-to-cart-btn(type="button" onclick=`agregar(${product.id})`)
                   i.fa-solid.fa-cart-shopping
                   | Añadir al carrito
+
+
 
 
 
     script.
       //- const datos = !{JSON.stringify(datos)};
       //- console.log(datos);
+      agregar = (id) => {
+
+        fetch(`/agregar/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              if (data.error)
+                avisoError(data.error);
+              else if (data.success)
+              {
+                console.log('successsssssss');
+                avisoExito(data.success);
+                document.getElementById('cart-count').textContent = parseInt(document.getElementById('cart-count').textContent) + 1;
+              }
+              productos.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+                });
+            }).catch(error => {
+              console.error('Errorrrr:', error);
+            })
+      }
+      let avisoError = (mensaje = "") => {
+        let aviso = document.createElement("div");
+        aviso.role = "alert";
+        aviso.classList.add("alert");
+        aviso.classList.add("alert-danger");
+
+        aviso.innerHTML = mensaje;
+        let DOMaviso = document.getElementById("aviso");
+        DOMaviso.innerHTML = '';
+        DOMaviso.appendChild(aviso);
+
+        setTimeout(function() {
+          aviso.style.opacity = '0';
+          setTimeout(function() {
+            DOMaviso.removeChild(aviso);
+          }, 1000);
+        }, 2000);
+      }
+      //- let avisoExito = (mensaje = "") => {
+      //-   let aviso = document.createElement("div");
+      //-   aviso.role = "alert";
+      //-   aviso.classList.add("alert");
+      //-   aviso.classList.add("alert-success");
+
+      //-   aviso.innerHTML = mensaje;
+      //-   let DOMaviso = document.getElementById("aviso");
+      //-   DOMaviso.innerHTML = '';
+      //-   DOMaviso.appendChild(aviso);
+
+      //-   setTimeout(function() {
+      //-     aviso.style.opacity = '0';
+      //-     setTimeout(function() {
+      //-       DOMaviso.removeChild(aviso);
+      //-     }, 1000);
+      //-   }, 2000);
+      //- }

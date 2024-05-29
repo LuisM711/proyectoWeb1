@@ -1,4 +1,62 @@
 include navbar
 
 block content
-    h1 Esto sera la wishlist
+    h1.text-center Lista de deseos
+    .contenido
+        div#aviso
+        if !wishlist || wishlist.length === 0
+            .alert.alert-info.text-center(role="alert")
+                h4 No tienes productos en tu lista de deseos.
+                a.btn.btn-lg.btn-primary(href="/#productos") Agregar productos
+        else
+            each product in wishlist
+                .col-12.mb-4
+                .card.d-flex.flex-row.align-items-center(style="margin: 10px;")
+                    .image-container.d-flex.align-items-center.justify-content-center#contenedorImagen(style="width: 150px;")
+                        img.card-img-left.img-fluid#imagen(src=product.url_Image alt=product.nombre style="width: 100%; height: auto;")
+                    .card-body.flex-grow-1
+                        h5.card-title.fw-bold= product.nombre + " no mi"
+                        h6.card-title.fw-bold Tipo: #{product.tipo}
+                        p.card-text= product.descripcion
+                        p.card-text.fw-bold Precio: #{product.precio}
+                        p.card-text.fw-bold Stock: #{product.stock}
+                    .button-container.d-flex.align-items-center(style="margin-left: auto;")
+                        input.btn.btn-primary.btn-sm(type='button' onclick=`agregar(${product.id})` value="Agregar al carrito" style="margin-right: 10px;")
+                        a.btn.btn-danger.btn-sm(href=`/eliminarWish/${product.id}` style="margin-left: 10px;") Eliminar
+
+    script.
+        //- const wishlist = !{ JSON.stringify(wishlist || {}) };
+        //- console.log(wishlist);
+        //- console.log(wishlist[0].id);
+        //- console.log(wishlist[0].nombre);
+        //- console.log(wishlist[0].descripcion);
+        //- console.log(wishlist[0].precio);
+        //- console.log(wishlist[0].stock);
+        //- console.log(wishlist[0].tipo);
+        //- console.log(wishlist[0].url_Image);
+
+        function agregar(id) {
+            fetch(`/agregar/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.error)
+                    avisoError(data.error);
+                else
+                    //window.location.href = '/wishlist';
+                    {
+                        avisoExito(data.success);
+                        document.getElementById('cart-count').textContent = parseInt( document.getElementById('cart-count').textContent)+1;
+                    }
+
+            });
+        }
+        
+    style.
+        .contenido > .card {
+            max-width : 1300px;
+        }

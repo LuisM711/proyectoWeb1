@@ -90,3 +90,22 @@ module.exports.perfil = async (req, res) => {
     }
 
 }
+module.exports.changePassword = async (req, res) => {
+    try {
+        if (req.session.informacion) {
+            const { newPassword } = req.body;
+            const usuario = await UsuarioModel.findByPk(req.session.informacion.id);
+            usuario.password = newPassword;
+            await usuario.save();
+            return res.json({ success: 'Contraseña actualizada' });
+
+        }
+        else {
+            throw new Error('Debes iniciar sesión');
+        }
+    } catch (error) {
+        return res.json({ error: error.message });
+    }
+
+
+}
