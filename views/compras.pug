@@ -1,3 +1,75 @@
 include navbar
 block content
-    h1 Esto sera el historial de compras
+    h1.text-center Compras
+    .contenido
+        if !compras || compras.length === 0
+            .alert.alert-info.text-center#alerta
+                h4 Aún no has realizado ninguna compra. ¡Explora nuestros productos y adquiere tus favoritos!
+                a.btn.btn-primary.btn-lg(href="/#productos") Ir a comprar
+        else
+            .container
+                div#aviso
+                .row
+                    .col-lg-9.col-md-8.col-sm-12
+                        each temp in compras
+                            div#item(style="border: 1px solid;padding: 20px")
+                                h5.text-center.fw-bold Compra realizada el #{temp.fecha}
+                                each item in temp.compra
+                                    .card.mb-4(style="width: 100%;")
+                                        .row.g-0
+                                            .col-md-4
+                                                img.card-img-left.img-fluid#imagen(src=item.url_Image alt=item.nombre style="width: 100%; height: auto;")
+                                            .col-md-8
+                                                .card-body
+                                                    h5.card-title.fw-bold= item.nombre
+                                                    p.card-text= item.descripcion
+                                                    p.card-text.fw-bold Precio: #{item.precio}
+                                                    p.card-text.fw-bold Stock: #{item.stock}
+                                                    button.add-to-cart-btn(type="button" onclick=`agregar(${item.id})`)
+                                                        i.fa-solid.fa-cart-shopping
+                                                        | Añadir al carrito
+                    .col-lg-3.col-md-4.col-sm-12
+                        .card
+                            .card-body
+                                h5.card-title.fw-bold Resumen de Compras
+                                p.card-text Precio total (sin IVA): #{compras.reduce((sum, temp) => sum + temp.compra.reduce((innerSum, item) => innerSum + item.precio, 0), 0)}
+                                p.card-text IVA (16%): #{compras.reduce((sum, temp) => sum + temp.compra.reduce((innerSum, item) => innerSum + item.precio, 0), 0) * 0.16}
+                                h4.card-text.fw-bold Precio total (con IVA): 
+                                #{compras.reduce((sum, temp) => {
+                                    const totalCompra = temp.compra.reduce((innerSum, item) => innerSum + item.precio, 0);
+                                    return sum + (totalCompra * 1.16);
+                                }, 0).toFixed(2)}
+
+
+
+
+
+    script.
+        const compras = !{ JSON.stringify(compras || {}) };
+        console.log(compras);
+        agregar = (id) => {
+
+        fetch(`/agregar/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              if (data.error)
+                avisoError(data.error);
+              else if (data.success)
+              {
+                avisoExito(data.success);
+                document.getElementById('cart-count').textContent = parseInt(document.getElementById('cart-count').textContent) + 1;
+              }
+              aviso.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+                });
+            }).catch(error => {
+              console.error('Errorrrr:', error);
+            })
+      }

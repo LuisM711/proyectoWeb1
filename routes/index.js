@@ -31,6 +31,7 @@ module.exports = () => {
     router.post('/changePassword', loginController.changePassword);
     router.post('/forgotPassword', correoController.forgotPassword);
     router.post('/register', loginController.registrarUsuario);
+    router.post('/pagar', carritoController.pagar);
 
 
     //   router.put('/guardarDetallesEmpleado/:idEmpleado',verification.revisarCookie, salariosController.actualizarDatos);

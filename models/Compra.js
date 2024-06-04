@@ -1,7 +1,9 @@
+// const { Model, DataTypes } = require('sequelize');
+// const sequelize = require('../database.js');
+// const { type } = require('express/lib/response');
+// const { FOREIGNKEYS } = require('sequelize/lib/query-types');
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database.js');
-const { type } = require('express/lib/response');
-const { FOREIGNKEYS } = require('sequelize/lib/query-types');
 const usuario = require('./Usuario.js');
 
 class Compra extends Model { }
@@ -22,9 +24,16 @@ Compra.init({
     compra: {
         type: DataTypes.STRING
     },
-    fecha:{
+    fecha: {
         type: DataTypes.DATE
     }
+
+}, {
+    sequelize,
+    modelName: 'Compra',
+    tableName: 'compra',
+    timestamps: true
 });
-Compra.belongsTo(usuario, {foreignKey: 'cliente'});
+
+Compra.belongsTo(usuario, { foreignKey: 'cliente' });
 module.exports = Compra;

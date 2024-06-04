@@ -29,8 +29,94 @@ block content
                                 p.card-text Precio total (sin IVA): #{carrito.reduce((sum, product) => sum + product.precio, 0)}
                                 p.card-text IVA (16%): #{carrito.reduce((sum, product) => sum + product.precio, 0) * 0.16}
                                 h4.card-text.fw-bold Precio total (con IVA): #{carrito.reduce((sum, product) => sum + product.precio, 0) * 1.16}
-                                input.btn.btn-success.btn-lg(type='button' value='Pagar' style="width: 100%; margin-top: 10px;")
+                                input.btn.btn-success.btn-lg(type='button' value='Pagar' style="width: 100%; margin-top: 10px;" onclick='confirmarPago()')
 
     script.
         const carrito = !{ JSON.stringify(carrito || {}) };
-        console.log(carrito);
+        //console.log(carrito);
+        confirmarPago = () => {
+            let menuModal = document.createElement('div');
+            menuModal.innerHTML = `
+                <div class="modal" tabindex="-1" role="dialog" id="modal" style="color:initial">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirmar método de pago</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="datosBancarios" onsubmit = "return verificar()">
+                                    <label for="metodoPago">Método de pago:</label> <br>
+                                    <select name="metodoPago" id="metodoPago" class="form-select">
+                                        <option value="credito">Tarjeta de crédito</option>
+                                        <option value="debito">Tarjeta de debito</option>
+                                    </select>
+                                    <label for = "numeroTarjeta">Número de tarjeta:</label> <br>
+                                    <input type="text" name="numeroTarjeta" id="numeroTarjeta" class="form-control" required placeholder= "16 digitos de la tarjeta" value="4444555566667777"> <br>
+                                    <label for = "fechaVencimiento">Fecha de vencimiento:</label> <br>
+                                    <input type="text" name="fechaVencimiento" id="fechaVencimiento" class="form-control" required placeholder= "Fecha de vencimiento MM/YY" value="01/27"> <br>
+                                    <label for = "cvv">CVV:</label> <br>
+                                    <input type="text" name="cvv" id="cvv" class="form-control" required placeholder= "Codigo de seguridad (cvv)" value="123"> <br>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <input type="button" class="btn btn-primary" onclick = "verificar()" value = "Pagar">
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(menuModal);
+            let modal = new bootstrap.Modal(document.getElementById('modal'));
+            modal.show();
+
+        }
+
+        const verificar = async () => {
+            //- event.preventDefault();
+            let metodoPago = document.querySelector('#metodoPago').value;
+            let numeroTarjeta = document.querySelector('#numeroTarjeta').value;
+            let fechaVencimiento = document.querySelector('#fechaVencimiento').value;
+            let cvv = document.querySelector('#cvv').value;
+
+            //ifs
+            if (numeroTarjeta.length !== 16 || isNaN(numeroTarjeta)) {
+                alert('El número de tarjeta debe tener 16 dígitos');
+                return;
+            }
+            if (fechaVencimiento.length !== 5) {
+                alert('La fecha de vencimiento debe tener el formato MM/YY');
+                return;
+            }
+            if (cvv.length !== 3 || isNaN(cvv)) {
+                alert('El CVV debe tener 3 dígitos');
+                return;
+            }
+
+
+            await fetch('/pagar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    metodoPago,
+                    numeroTarjeta,
+                    fechaVencimiento,
+                    cvv
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.error) {
+                    alert(data.error);
+                } else if (data.success) {
+                    alert("Gracias por su compra, vuelva pronto!");
+                    window.location.href = '/';
+                }
+            });
+
+            };

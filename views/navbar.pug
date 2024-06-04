@@ -56,13 +56,13 @@ html(lang="es")
               include componentes/toggle-darkmode
     script.
       onload = (event) => {
-        //- const darkmode = document.cookie.split('; ').find(row => row.startsWith('darkmode='));
-        //- if (darkmode) {
-        //-   document.getElementById('toggle').checked = darkmode.split('=')[1] === 'true';
-        //-   if (document.getElementById('toggle').checked) {
-        //-     document.body.classList.add('dark');
-        //-   }
-        //- }
+        const darkmode = document.cookie.split('; ').find(row => row.startsWith('darkmode='));
+        if (darkmode) {
+          document.getElementById('toggle').checked = darkmode.split('=')[1] === 'true';
+          if (document.getElementById('toggle').checked) {
+            document.body.classList.add('dark');
+          }
+        }
         if(toggle.checked) {
           document.body.classList.add('dark');
         }
