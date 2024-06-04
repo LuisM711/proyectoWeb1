@@ -27,6 +27,14 @@ block content
       div#productos
       h1.text-center Nuestros productos
       div#aviso
+      label(for="filtro") Filtrar por nombre
+      input(type="text", onkeyup="filtrar(this.value)", id="filtro", placeholder="Filtrar por nombre", class="form-control")
+      //filtrar por tipo (zoan, paramecia, logia)
+      label(for="tipoProducto") O bien, filtrar por tipo
+      select#tipoProducto(name="tipoProducto", onchange="filtrarTipo(this.value)", class="form-select")
+        option(value="") Todos
+        each tipo in ['Zoan', 'Paramecia', 'Logia']
+          option(value=tipo)= tipo
       div.contenido
         each product in data
           .col-lg-4.col-md-6.col-sm-12.mb-4
@@ -70,7 +78,6 @@ block content
                 avisoError(data.error);
               else if (data.success)
               {
-                console.log('successsssssss');
                 avisoExito(data.success);
                 document.getElementById('cart-count').textContent = parseInt(document.getElementById('cart-count').textContent) + 1;
               }
@@ -99,6 +106,54 @@ block content
             DOMaviso.removeChild(aviso);
           }, 1000);
         }, 2000);
+      }
+      //filtro tipoProducto
+      let filtrar = (text) => {
+        tipoProducto.value = '';
+        let encontrado = false;
+        console.log("filtrando por texto " + text);
+        //let cards = document.getElementsByClassName('card');
+        let cards = document.querySelectorAll('.col-lg-4.col-md-6.col-sm-12.mb-4');
+
+        for (let card of cards) {
+          let nombre = card.querySelector('.card-title').textContent;
+          if (nombre.toLowerCase().includes(text.toLowerCase())) {
+            encontrado = true;
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+            //mostrar mensaje de que no se encontraron resultados en esa busqueda
+            //document.querySelector('.contenido').innerHTML = '<h1>No se encontraron resultados</h1>';
+
+          }
+        }
+        if(!encontrado)
+          avisoError('No se encontraron resultados');
+      }
+      let filtrarTipo = (text) => {
+        filtro.value = '';
+
+        let encontrado = false;
+        console.log("filtrando por tipo " + text);
+        //let cards = document.getElementsByClassName('card');
+        let cards = document.querySelectorAll('.col-lg-4.col-md-6.col-sm-12.mb-4');
+        //console.log(cards);
+        for (let card of cards) {
+          let tipo = card.querySelector('h6.card-title').textContent;
+          console.log(tipo)
+          if (tipo.toLowerCase().includes(text.toLowerCase())) {
+            card.style.display = 'block';
+            encontrado = true;
+          } else {
+            card.style.display = 'none';
+            //mostrar mensaje de que no se encontraron resultados en esa busqueda
+            //document.querySelector('.contenido').innerHTML = '<h1>No se encontraron resultados</h1>';
+            //console.log('tipolower'+ tipo.toLowerCase());
+            //encontrado=false;
+          }
+        }
+          if(!encontrado)
+            avisoError('No se encontraron resultados');
       }
       //- let avisoExito = (mensaje = "") => {
       //-   let aviso = document.createElement("div");
